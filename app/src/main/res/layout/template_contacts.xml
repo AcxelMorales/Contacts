@@ -28,7 +28,7 @@
         android:contentDescription="@string/description_picture"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/foto_01" />
 
     <TextView
         android:id="@+id/textName"
