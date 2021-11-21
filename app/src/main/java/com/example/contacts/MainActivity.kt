@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.action_new_contact -> {
-                val intent = Intent(this, DetailActivity::class.java)
+                val intent = Intent(this, NewContactActivity::class.java)
                 startActivity(intent)
                 true
             } else -> {
