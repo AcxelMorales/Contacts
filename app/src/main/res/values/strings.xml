@@ -4,4 +4,9 @@
     <string name="title_new_contact">New contact</string>
     <string name="title_search">Search contact</string>
     <string name="title_switch">Change view</string>
+    <string name="title_age">Age</string>
+    <string name="title_weight">Weight</string>
+    <string name="title_telephone">Telephone</string>
+    <string name="title_email">Email</string>
+    <string name="title_address">Address</string>
 </resources>
