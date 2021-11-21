@@ -5,7 +5,10 @@ import androidx.appcompat.widget.Toolbar
 
 import android.os.Bundle
 
+import android.content.Intent
+
 import android.view.Menu
+import android.view.MenuItem
 
 import android.widget.ListView
 
@@ -41,6 +44,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item?.itemId) {
+            R.id.action_new_contact -> {
+                val intent = Intent(this, DetailActivity::class.java)
+                startActivity(intent)
+                true
+            } else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }
