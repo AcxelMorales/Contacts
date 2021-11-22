@@ -5,15 +5,29 @@ import android.os.Bundle
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 
 import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AlertDialog
 
 import com.example.contacts.classes.Contact
 
 class NewContactActivity : AppCompatActivity() {
+
+    var pictureIndex: Int = 0
+    var picture: ImageView? = null
+    private val pictures = arrayOf(
+        R.drawable.foto_01,
+        R.drawable.foto_02,
+        R.drawable.foto_03,
+        R.drawable.foto_04,
+        R.drawable.foto_05,
+        R.drawable.foto_06
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +39,11 @@ class NewContactActivity : AppCompatActivity() {
 
         var actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
+
+        this.picture = findViewById(R.id.detailPicture)
+        picture?.setOnClickListener {
+            this.selectedPicture()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -73,7 +92,7 @@ class NewContactActivity : AppCompatActivity() {
                         address.text.toString(),
                         telephone.text.toString(),
                         email.text.toString(),
-                        R.drawable.foto_01
+                        this.getPicture(this.pictureIndex)
                     ))
 
                     finish()
@@ -84,6 +103,36 @@ class NewContactActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun selectedPicture() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select a profile picture")
+
+        val dialogAdapter = ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item)
+        dialogAdapter.add("Picture 01")
+        dialogAdapter.add("Picture 02")
+        dialogAdapter.add("Picture 03")
+        dialogAdapter.add("Picture 04")
+        dialogAdapter.add("Picture 05")
+        dialogAdapter.add("Picture 06")
+
+        builder.setAdapter(dialogAdapter) {
+            _, witch ->
+            this.pictureIndex = witch
+            this.picture?.setImageResource(this.getPicture(this.pictureIndex))
+        }
+
+        builder.setNegativeButton("Cancel") {
+            dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    private fun getPicture(index: Int): Int {
+        return this.pictures[index]
     }
 
 }
