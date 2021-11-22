@@ -2,11 +2,15 @@ package com.example.contacts
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import android.view.Menu
 import android.view.MenuItem
+
 import android.widget.EditText
+import android.widget.Toast
 
 import androidx.appcompat.widget.Toolbar
+
 import com.example.contacts.classes.Contact
 
 class NewContactActivity : AppCompatActivity() {
@@ -40,19 +44,41 @@ class NewContactActivity : AppCompatActivity() {
                 val email = findViewById<EditText>(R.id.detailEmail)
                 val address = findViewById<EditText>(R.id.detailAddress)
 
-                MainActivity.addContact(Contact(
-                    name.text.toString(),
-                    surname.text.toString(),
-                    company.text.toString(),
-                    years.text.toString().toInt(),
-                    weight.text.toString().toFloat(),
-                    address.text.toString(),
-                    telephone.text.toString(),
-                    email.text.toString(),
-                    R.drawable.foto_01
-                ))
+                var fields = ArrayList<String>()
 
-                finish()
+                fields.add(name.text.toString())
+                fields.add(surname.text.toString())
+                fields.add(company.text.toString())
+                fields.add(years.text.toString())
+                fields.add(weight.text.toString())
+                fields.add(telephone.text.toString())
+                fields.add(email.text.toString())
+                fields.add(address.text.toString())
+
+                var flag = 0
+
+                for (e in fields) {
+                    if (e.isNullOrEmpty()) flag++
+                }
+
+                if (flag > 0) {
+                    Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
+                } else {
+                    MainActivity.addContact(Contact(
+                        name.text.toString(),
+                        surname.text.toString(),
+                        company.text.toString(),
+                        years.text.toString().toInt(),
+                        weight.text.toString().toFloat(),
+                        address.text.toString(),
+                        telephone.text.toString(),
+                        email.text.toString(),
+                        R.drawable.foto_01
+                    ))
+
+                    finish()
+                }
+
                 true
             } else -> {
                 super.onOptionsItemSelected(item)
