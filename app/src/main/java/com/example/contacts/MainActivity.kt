@@ -17,7 +17,16 @@ import com.example.contacts.classes.Contact
 
 class MainActivity : AppCompatActivity() {
 
-    var contacts: ArrayList<Contact>? = null
+    var list: ListView? = null
+    var adapter: CustomAdapter? = null
+
+    companion object {
+        var contacts: ArrayList<Contact>? = null
+
+        fun addContact(contact: Contact) {
+            contacts?.add(contact)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +37,17 @@ class MainActivity : AppCompatActivity() {
 
         contacts = ArrayList()
         contacts?.add(Contact("Acxel", "Morales", "Endcom", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.acxel))
-        contacts?.add(Contact("Linus", "Torvalds", "Linux", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_01))
-        contacts?.add(Contact("Ryan", "Dahl", "Node JS & Deno", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_02))
-        contacts?.add(Contact("John", "Doe", "Microsoft", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_03))
-        contacts?.add(Contact("Hedy", "Lamar", "Google", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_04))
-        contacts?.add(Contact("Rózsa", "Peter", "IBM", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_05))
-        contacts?.add(Contact("Grace", "Murray", "ASUS", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_06))
+        //contacts?.add(Contact("Linus", "Torvalds", "Linux", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_01))
+        //contacts?.add(Contact("Ryan", "Dahl", "Node JS & Deno", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_02))
+        //contacts?.add(Contact("John", "Doe", "Microsoft", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_03))
+        //contacts?.add(Contact("Hedy", "Lamar", "Google", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_04))
+        //contacts?.add(Contact("Rózsa", "Peter", "IBM", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_05))
+        //contacts?.add(Contact("Grace", "Murray", "ASUS", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_06))
 
-        val list = findViewById<ListView>(R.id.listContact)
-        val adapter = CustomAdapter(this, contacts!!)
+        this.list = findViewById<ListView>(R.id.listContact)
+        this.adapter = CustomAdapter(this, contacts!!)
 
-        list.adapter = adapter
+        list?.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -56,6 +65,11 @@ class MainActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        this.adapter?.notifyDataSetChanged()
     }
 
 }
