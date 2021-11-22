@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         //contacts?.add(Contact("Rózsa", "Peter", "IBM", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_05))
         //contacts?.add(Contact("Grace", "Murray", "ASUS", 24, 76.0F, "Estado de México", "5566778899", "acxel@endcom.mx", R.drawable.foto_06))
 
-        this.list = findViewById<ListView>(R.id.listContact)
+        this.list = findViewById(R.id.listContact)
         this.adapter = CustomAdapter(this, contacts!!)
 
         list?.adapter = adapter
