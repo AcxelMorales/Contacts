@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 
+import android.widget.ImageView
 import android.widget.TextView
 
 import androidx.appcompat.widget.Toolbar
 
 class DetailActivity : AppCompatActivity() {
+
+    var index: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
         var actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val index = intent.getStringExtra("ID").toString().toInt()
+        this.index = intent.getStringExtra("ID").toString().toInt()
         val contact = MainActivity.contacts?.get(index)
 
         val name = findViewById<TextView>(R.id.detailName)
@@ -32,6 +35,7 @@ class DetailActivity : AppCompatActivity() {
         val telephone = findViewById<TextView>(R.id.detailTelephone)
         val email = findViewById<TextView>(R.id.detailEmail)
         val address = findViewById<TextView>(R.id.detailAddress)
+        val picture = findViewById<ImageView>(R.id.detailPicture)
 
         name.text = contact?.name + " " + contact?.surnames
         company.text = contact?.company
@@ -40,6 +44,7 @@ class DetailActivity : AppCompatActivity() {
         weight.text = contact?.weight.toString() + " kg"
         email.text = contact?.email
         address.text = contact?.address
+        contact?.picture?.let { picture.setImageResource(it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,6 +60,8 @@ class DetailActivity : AppCompatActivity() {
             }
 
             R.id.action_delete -> {
+                MainActivity.deleteContact(this.index)
+                finish()
                 true
             }
 
