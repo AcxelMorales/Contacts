@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         fun deleteContact(index: Int) {
             contacts?.removeAt(index)
         }
+
+        fun updateContact(index: Int, newContact: Contact) {
+            contacts?.set(index, newContact)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

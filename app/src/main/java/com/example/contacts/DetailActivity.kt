@@ -1,7 +1,10 @@
 package com.example.contacts
 
+import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import android.view.Menu
 import android.view.MenuItem
 
@@ -26,6 +29,10 @@ class DetailActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         this.index = intent.getStringExtra("ID").toString().toInt()
+        this.dataMap()
+    }
+
+    private fun dataMap() {
         val contact = MainActivity.contacts?.get(index)
 
         val name = findViewById<TextView>(R.id.detailName)
@@ -66,6 +73,9 @@ class DetailActivity : AppCompatActivity() {
             }
 
             R.id.action_edit -> {
+                val intent = Intent(this, NewContactActivity::class.java)
+                intent.putExtra("ID", this.index.toString())
+                startActivity(intent)
                 true
             }
 
@@ -73,6 +83,11 @@ class DetailActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        this.dataMap()
     }
 
 }

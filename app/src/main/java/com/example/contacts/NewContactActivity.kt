@@ -5,11 +5,8 @@ import android.os.Bundle
 
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +15,7 @@ import com.example.contacts.classes.Contact
 
 class NewContactActivity : AppCompatActivity() {
 
+    var index: Int = -1
     var pictureIndex: Int = 0
     var picture: ImageView? = null
     private val pictures = arrayOf(
@@ -43,6 +41,11 @@ class NewContactActivity : AppCompatActivity() {
         this.picture = findViewById(R.id.detailPicture)
         picture?.setOnClickListener {
             this.selectedPicture()
+        }
+
+        if (intent.hasExtra("ID")) {
+            this.index = intent.getStringExtra("ID")?.toInt()!!
+            this.setData(this.index)
         }
     }
 
@@ -88,17 +91,31 @@ class NewContactActivity : AppCompatActivity() {
                 if (flag > 0) {
                     Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
                 } else {
-                    MainActivity.addContact(Contact(
-                        name.text.toString(),
-                        surname.text.toString(),
-                        company.text.toString(),
-                        years.text.toString().toInt(),
-                        weight.text.toString().toFloat(),
-                        address.text.toString(),
-                        telephone.text.toString(),
-                        email.text.toString(),
-                        this.getPicture(this.pictureIndex)
-                    ))
+                    if (this.index > -1) {
+                        MainActivity.updateContact(this.index, Contact(
+                            name.text.toString(),
+                            surname.text.toString(),
+                            company.text.toString(),
+                            years.text.toString().split(" ")[0].toInt(),
+                            weight.text.toString().split(" ")[0].toFloat(),
+                            address.text.toString(),
+                            telephone.text.toString(),
+                            email.text.toString(),
+                            this.getPicture(this.pictureIndex)
+                        ))
+                    } else {
+                        MainActivity.addContact(Contact(
+                            name.text.toString(),
+                            surname.text.toString(),
+                            company.text.toString(),
+                            years.text.toString().toInt(),
+                            weight.text.toString().toFloat(),
+                            address.text.toString(),
+                            telephone.text.toString(),
+                            email.text.toString(),
+                            this.getPicture(this.pictureIndex)
+                        ))
+                    }
 
                     finish()
                 }
@@ -138,6 +155,37 @@ class NewContactActivity : AppCompatActivity() {
 
     private fun getPicture(index: Int): Int {
         return this.pictures[index]
+    }
+
+    private fun setData(index: Int) {
+        val contact = MainActivity.contacts?.get(index)
+
+        val name = findViewById<TextView>(R.id.detailName)
+        val surnames = findViewById<TextView>(R.id.detailSurname)
+        val company = findViewById<TextView>(R.id.detailCompany)
+        val age = findViewById<TextView>(R.id.detailAge)
+        val weight = findViewById<TextView>(R.id.detailWeight)
+        val telephone = findViewById<TextView>(R.id.detailTelephone)
+        val email = findViewById<TextView>(R.id.detailEmail)
+        val address = findViewById<TextView>(R.id.detailAddress)
+        val picture = findViewById<ImageView>(R.id.detailPicture)
+
+        name.text = contact?.name
+        surnames.text = contact?.surnames
+        company.text = contact?.company
+        telephone.text = contact?.telephone
+        age.text = contact?.age.toString() + " years"
+        weight.text = contact?.weight.toString() + " kg"
+        email.text = contact?.email
+        address.text = contact?.address
+        contact?.picture?.let { picture.setImageResource(it) }
+
+        for ((position, f) in this.pictures.withIndex()) {
+            if (contact?.picture == f) {
+                this.pictureIndex = position
+            }
+
+        }
     }
 
 }
