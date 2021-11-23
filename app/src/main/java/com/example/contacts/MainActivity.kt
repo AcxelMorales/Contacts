@@ -48,6 +48,12 @@ class MainActivity : AppCompatActivity() {
         this.adapter = CustomAdapter(this, contacts!!)
 
         list?.adapter = adapter
+
+        list?.setOnItemClickListener { _, _, position, _ ->
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("ID", position.toString())
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
