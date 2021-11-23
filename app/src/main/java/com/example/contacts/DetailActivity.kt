@@ -2,6 +2,8 @@ package com.example.contacts
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 
 import android.widget.TextView
 
@@ -38,6 +40,32 @@ class DetailActivity : AppCompatActivity() {
         weight.text = contact?.weight.toString() + " kg"
         email.text = contact?.email
         address.text = contact?.address
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
+            R.id.action_delete -> {
+                true
+            }
+
+            R.id.action_edit -> {
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }
