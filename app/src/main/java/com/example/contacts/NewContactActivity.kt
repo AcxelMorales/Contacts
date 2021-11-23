@@ -53,6 +53,11 @@ class NewContactActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
             R.id.action_add_contact -> {
                 val name = findViewById<EditText>(R.id.detailName)
                 val surname = findViewById<EditText>(R.id.detailSurname)

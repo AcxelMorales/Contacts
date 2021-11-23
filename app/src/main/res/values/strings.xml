@@ -10,4 +10,6 @@
     <string name="title_email">Email</string>
     <string name="title_address">Address</string>
     <string name="title_add_contact">Add contact</string>
+    <string name="title_delete">Delete contact</string>
+    <string name="title_edit">Edit contact</string>
 </resources>
